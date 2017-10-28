@@ -5,7 +5,10 @@
 (function() {
     // JLT - you should favor let and const over var.  I really ever use var now
     // that the ES6 spec is implemented in most browsers.
-    let memoryArray = ['A','A','B','B','C','C','D','D','E','E','F','F','G','G','H','H','I','I','J','J','K','K','L','L'];
+    //let memoryArray = ['A','A','B','B','C','C','D','D','E','E','F','F','G','G','H','H','I','I','J','J','K','K','L','L'];
+    
+    // JLT - review the generateMemoryArray function to see the changes
+    let memoryArray = generateMemoryArray();
     let memoryValues = [];
     let memoryTileIds = [];
     let tilesFlipped = 0;
@@ -20,6 +23,24 @@
         }
     }
 
+    function generateMemoryArray() {
+        let result = [];
+
+        let charCode = 65; // JLT - 65 is the ascii code for 'A'
+        for (let i = 0; i < 12; i++, charCode++) {
+            let letter = String.fromCharCode(charCode);
+            //result.push(letter);
+            //result.push(letter);
+
+            // JLT - now the memory array will contain an object literal with
+            // the letter value and the image to be displayed
+            result.push({ letter: letter, image: `${letter}.png` });
+            result.push({ letter: letter, image: `${letter}.png` });
+        }
+
+        return result;
+    }
+
     function newBoard () {
         tilesFlipped = 0;
         var output = '';
@@ -27,14 +48,19 @@
         for (var i = 0; i < memoryArray.length; i++) {
             // JLT - string interpolation can make this simpler to read/write
             //output += '<div id="tile'+i+'" onclick="memoryFlipTile(this,\''+memoryArray[i]+'\')"></div>';
-            output += `<div id="tile${i}"></div>`;
+            let id = `tile${memoryArray[i].letter}`;
+            let image = memoryArray[i].image;
+            // JLT - the html fragment will have the image embedded
+            output += `<div id="${id}"><img src="${image}"></div>`;
         }
+
         document.getElementById('memoryBoard').innerHTML = output;
 
         for (let j = 0; j < memoryArray.length; j++) {
             // JLT - set up event listeners for the tiles here, rather than
             // using the div's "onclick" attribute.
-            document.getElementById(`tile${j}`).addEventListener("click", memoryFlipTile);
+            let id = `tile${memoryArray[j].letter}`;
+            document.getElementById(id).addEventListener("click", memoryFlipTile);
         }
     }
 
