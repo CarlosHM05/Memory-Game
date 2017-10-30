@@ -29,8 +29,8 @@
         let charCode = 65; // JLT - 65 is the ascii code for 'A'
         for (let i = 0; i < 12; i++, charCode++) {
             let letter = String.fromCharCode(charCode);
-            //result.push(letter);
-            //result.push(letter);
+            // result.push(letter);
+            // result.push(letter);
 
             // JLT - now the memory array will contain an object literal with
             // the letter value and the image to be displayed
@@ -68,7 +68,7 @@
     // into the click handler.
     //function memoryFlipTile(tile,val){
     function memoryFlipTile(event){
-        //console.log(event);   // JLT - uncomment to view event properties
+        // console.log(event);   // JLT - uncomment to view event properties
 
         // JLT - now you don't need to pass in parameters to this method, you
         // can get most of the data you need from the event object.
@@ -79,7 +79,7 @@
         // JLT - avoid using the double equals, the triple equal === is a
         // stricter equality check.
         if(tile.innerHTML == "" && memoryValues.length < 2){
-            tile.style.background = '#FFF';
+            tile.style.background = `${letter}.png`;
             tile.innerHTML = val;
             if(memoryValues.length == 0){
                 memoryValues.push(val);
