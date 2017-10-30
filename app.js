@@ -48,7 +48,7 @@
         for (var i = 0; i < memoryArray.length; i++) {
             // JLT - string interpolation can make this simpler to read/write
             //output += '<div id="tile'+i+'" onclick="memoryFlipTile(this,\''+memoryArray[i]+'\')"></div>';
-            let id = `tile${memoryArray[i].letter}`;
+            let id = `tile${i}`;
             let image = memoryArray[i].image;
             // JLT - the html fragment will have the image embedded
             output += `<div id="${id}"><img src="${image}"></div>`;
@@ -59,7 +59,7 @@
         for (let j = 0; j < memoryArray.length; j++) {
             // JLT - set up event listeners for the tiles here, rather than
             // using the div's "onclick" attribute.
-            let id = `tile${memoryArray[j].letter}`;
+            let id = `tile${j}`;
             document.getElementById(id).addEventListener("click", memoryFlipTile);
         }
     }
@@ -74,12 +74,13 @@
         // can get most of the data you need from the event object.
         let tile = event.target;
         let index = parseInt(event.target.id.replace("tile", ""));
-        let val = memoryArray[index];
+        let val = memoryArray[index].letter;
 
         // JLT - avoid using the double equals, the triple equal === is a
         // stricter equality check.
-        if(tile.innerHTML == "" && memoryValues.length < 2){
-            tile.style.background = `${letter}.png`;
+        //if(tile.innerHTML == "" && memoryValues.length < 2){
+        if(memoryValues.length < 2){    // JLT - tile.innerHTML is never empty
+            tile.style.background = `${val}.png`;
             tile.innerHTML = val;
             if(memoryValues.length == 0){
                 memoryValues.push(val);
